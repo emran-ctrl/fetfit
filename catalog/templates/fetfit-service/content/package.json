@@ -1,0 +1,8 @@
+{
+  "name": "${{ values.serviceName }}",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {}
+}

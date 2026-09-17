@@ -20,6 +20,11 @@
             yarn        # Yarn Classic 1.22 — what create-app expects
             python312   # for native module builds (node-gyp); 3.14 is too new
             git
+            (python312.withPackages (ps: [
+              ps.mkdocs            # TechDocs local generator
+              ps.mkdocs-material   # MkDocs theme (material; techdocs-core not in nixpkgs)
+              ps.markdown-include  # include .md fragments from other dirs
+            ]))
           ];
 
           shellHook = ''

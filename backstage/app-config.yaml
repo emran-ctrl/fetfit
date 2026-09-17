@@ -163,6 +163,10 @@ techdocs:
   builder: 'local' # Alternatives - 'external'
   generator:
     runIn: 'local' # Alternatives - 'docker'
+    mkdocs:
+      # nixpkgs has mkdocs + mkdocs-material but not the techdocs-core plugin,
+      # so skip injecting it; our docs use the material theme directly.
+      omitTechdocsCorePlugin: true
   publisher:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
@@ -230,18 +234,6 @@ catalog:
       target: ../../../catalog/templates/*/template.yaml
       rules:
         - allow: [Template]
-
-    # Local example data (demo only), re-enable until the catalog above is populated
-    # - type: file
-    #   target: ../../examples/entities.yaml
-    # - type: file
-    #   target: ../../examples/template/template.yaml
-    #   rules:
-    #     - allow: [Template]
-    # - type: file
-    #   target: ../../examples/org.yaml
-    #   rules:
-    #     - allow: [User, Group]
 
     ## Uncomment these lines to add more example data
     # - type: url

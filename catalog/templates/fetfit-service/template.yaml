@@ -1,0 +1,109 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: fetfit-service
+  title: fetfit Service
+  description: Golden-path template for a new fetfit service — creates the repo, wires up docs, and registers it in the catalog
+  tags:
+    - fetfit
+    - golden-path
+spec:
+  owner: group:default/platform-team
+  type: service
+
+  parameters:
+    - title: Service details
+      required:
+        - serviceName
+        - owner
+      properties:
+        serviceName:
+          title: Service name
+          type: string
+          description: Unique name of the new service
+          ui:field: EntityNamePicker
+          ui:autofocus: true
+        description:
+          title: Description
+          type: string
+          description: Short, human-friendly summary of what the service does
+          ui:options:
+            rows: 2
+        owner:
+          title: Owner
+          type: string
+          description: The fetfit group that owns this service
+          ui:field: OwnerPicker
+          ui:options:
+            catalogFilter:
+              kind: Group
+        serviceType:
+          title: Component type
+          type: string
+          enum:
+            - service
+            - website
+          default: service
+
+    - title: Repository
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+
+  steps:
+    # Fetch the skeleton from the content directory inside this template.
+    - id: fetch-base
+      name: Fetch Base
+      action: fetch:template
+      input:
+        url: ./content
+        values:
+          serviceName: ${{ parameters.serviceName }}
+          description: ${{ parameters.description }}
+          owner: ${{ parameters.owner }}
+          serviceType: ${{ parameters.serviceType }}
+
+    # Publish the new repository to GitHub (needs GITHUB_TOKEN, see Phase 4).
+    - id: publish
+      name: Publish to GitHub
+      action: publish:github
+      input:
+        description: ${{ parameters.description }}
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: main
+        repoVisibility: private
+
+    # Register the new service in the catalog so it shows up immediately.
+    - id: register
+      name: Register in catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
+
+    # Let the owning group know the service was created.
+    - id: notify
+      name: Notify owner
+      action: notification:send
+      input:
+        recipients: entity
+        entityRefs:
+          - ${{ parameters.owner }}
+        title: New service created
+        info: ${{ parameters.serviceName }} has been scaffolded and registered in the catalog
+        severity: normal
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}

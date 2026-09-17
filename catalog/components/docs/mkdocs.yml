@@ -1,0 +1,10 @@
+site_name: fetfit IDP
+site_description: Documentation for the fetfit internal developer platform
+docs_dir: content
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+theme:
+  name: material
+plugins:
+  - search
