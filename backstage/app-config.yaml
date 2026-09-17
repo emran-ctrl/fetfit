@@ -194,40 +194,40 @@ catalog:
   rules:
     - allow: [Component, System, API, Resource, Location]
   locations:
-    # Catalog-as-code, see ../catalog for the entity definitions.
-    # File locations are relative to the backend process, typically `packages/backend`
+    # Catalog-as-code lives at the repo root, above the backend package,
+    # so paths here go up three levels from packages/backend.
     - type: file
-      target: ../../catalog/org/all.yaml
+      target: ../../../catalog/org/all.yaml
       rules:
         - allow: [User, Group]
 
     - type: file
-      target: ../../catalog/domains/*.yaml
+      target: ../../../catalog/domains/*.yaml
       rules:
         - allow: [Domain]
 
     - type: file
-      target: ../../catalog/systems/*.yaml
+      target: ../../../catalog/systems/*.yaml
       rules:
         - allow: [System]
 
     - type: file
-      target: ../../catalog/components/*.yaml
+      target: ../../../catalog/components/*.yaml
       rules:
         - allow: [Component]
 
     - type: file
-      target: ../../catalog/apis/*.yaml
+      target: ../../../catalog/apis/*.yaml
       rules:
         - allow: [API]
 
     - type: file
-      target: ../../catalog/resources/*.yaml
+      target: ../../../catalog/resources/*.yaml
       rules:
         - allow: [Resource]
 
     - type: file
-      target: ../../catalog/templates/*/template.yaml
+      target: ../../../catalog/templates/*/template.yaml
       rules:
         - allow: [Template]
 

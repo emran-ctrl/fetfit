@@ -1,0 +1,19 @@
+---
+# Component: a concrete service, website or library. One file per component.
+# The annotations below are what tie the component to its actual repository and
+# docs. They are placeholders until Phase 4 wires the GitHub integration.
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-component
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: fetfit-idp
+  title: fetfit IDP
+  description: The fetfit internal developer platform built on Backstage
+  annotations:
+    github.com/project-slug: <your-org>/fetfit
+    backstage.io/techdocs-ref: dir:docs
+spec:
+  type: website
+  lifecycle: experimental
+  owner: group:default/platform-team
+  system: idp-platform

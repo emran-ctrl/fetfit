@@ -1,0 +1,19 @@
+---
+# Component: a concrete service, website or library. One file per component.
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: recipe-service
+  title: Recipe Service
+  description: Backend service exposing recipes and meal data
+  annotations:
+    github.com/project-slug: <your-org>/recipe-service
+spec:
+  type: service
+  lifecycle: experimental
+  owner: group:default/sous-chefs
+  system: meal-tracker
+  providesApis:
+    - recipe-api
+  dependsOn:
+    - resource:recipe-db

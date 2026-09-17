@@ -1,0 +1,27 @@
+---
+# API: an interface a component exposes or consumes. `definition` can be
+# OpenAPI, AsyncAPI, GraphQL or a gRPC contract.
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: recipe-api
+  title: Recipe API
+  description: REST API exposing recipes and meal data
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: group:default/sous-chefs
+  system: meal-tracker
+  definition: |
+    openapi: 3.0.0
+    info:
+      title: Recipe API
+      version: 0.1.0
+    paths:
+      /recipes:
+        get:
+          summary: List recipes
+          responses:
+            '200':
+              description: A list of recipes

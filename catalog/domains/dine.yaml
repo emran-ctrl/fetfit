@@ -1,0 +1,11 @@
+---
+# Domain: a business area. Create one file per domain here to extend the catalog.
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-domain
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: dine
+  title: Dine
+  description: Customer and product-facing experiences — the meals people consume
+spec:
+  owner: group:default/sous-chefs

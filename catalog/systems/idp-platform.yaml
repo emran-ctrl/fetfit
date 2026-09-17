@@ -1,0 +1,12 @@
+---
+# System: a product or group of services delivering one capability.
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-system
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: idp-platform
+  title: IDP Platform
+  description: The fetfit internal developer platform built on Backstage
+spec:
+  owner: group:default/platform-team
+  domain: operations

@@ -1,0 +1,13 @@
+---
+# Resource: a backing dependency such as a database, cluster or queue.
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-resource
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: recipe-db
+  title: Recipe Database
+  description: PostgreSQL database backing the recipe service
+spec:
+  type: database
+  owner: group:default/sous-chefs
+  system: meal-tracker
