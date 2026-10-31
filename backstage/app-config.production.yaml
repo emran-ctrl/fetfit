@@ -29,8 +29,18 @@ backend:
       #     $file: <file-path>/ca/server.crt
 
 auth:
+  environment: production
   providers:
-    guest: {}
+    # Guest access is disabled in production; GitHub is the only sign-in option.
+    # See https://backstage.io/docs/auth/github/provider
+    github:
+      production:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+        signIn:
+          resolvers:
+            # Prefer the immutable GitHub user ID (github.com/user-id annotation).
+            - resolver: userIdMatchingUserEntityAnnotation
 
 catalog:
   # Overrides the default list locations from app-config.yaml as these contain example data.

@@ -48,7 +48,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Group
 metadata:
   name: guests
-  description: Guests on the portal while authentication is not yet configured
+  description: Guest users; sign-in is only available in development
 spec:
   type: team
   profile:
@@ -57,7 +57,8 @@ spec:
   children: []
 ---
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user
-# Guest login is the only provider enabled until Phase 4 (auth).
+# Guest is only offered as a sign-in option in development; production uses
+# GitHub. See app-config.yaml / app-config.production.yaml.
 apiVersion: backstage.io/v1alpha1
 kind: User
 metadata:
@@ -67,12 +68,17 @@ spec:
     displayName: Guest
   memberOf: [guests]
 ---
-# Starter users; the real people will be ingested from the identity provider
-# (GitHub org / Google) in Phase 4.
+# Starter users; replace the annotations and profile details with the real
+# people once they sign in with GitHub. The `github.com/user-id` annotation is
+# matched by the auth sign-in resolver (userIdMatchingUserEntityAnnotation) and
+# must hold the immutable numeric GitHub user ID.
+# https://backstage.io/docs/auth/github/provider#resolvers
 apiVersion: backstage.io/v1alpha1
 kind: User
 metadata:
   name: head-sous-chef
+  annotations:
+    github.com/user-id: "REPLACE_WITH_GITHUB_USER_ID"
 spec:
   profile:
     displayName: Head Sous Chef
@@ -83,6 +89,8 @@ apiVersion: backstage.io/v1alpha1
 kind: User
 metadata:
   name: platform-engineer
+  annotations:
+    github.com/user-id: "REPLACE_WITH_GITHUB_USER_ID"
 spec:
   profile:
     displayName: Platform Engineer

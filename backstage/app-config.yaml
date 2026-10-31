@@ -183,9 +183,25 @@ techdocs:
 
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
+  environment: development
   providers:
     # See https://backstage.io/docs/auth/guest/provider
-    guest: {}
+    # Guest is only offered as a sign-in option in development (see App.tsx).
+    guest:
+      # Must match the guest User entity in catalog/org/all.yaml (default namespace).
+      userEntityRef: user:default/guest
+    # See https://backstage.io/docs/auth/github/provider
+    github:
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+        signIn:
+          resolvers:
+            # Prefer the immutable GitHub user ID (github.com/user-id annotation).
+            # The fallback keeps sign-in working until every developer has a
+            # catalog entry; remove it once the annotations are populated.
+            - resolver: userIdMatchingUserEntityAnnotation
+              dangerouslyAllowSignInWithoutUserInCatalog: true
   # see https://backstage.io/docs/ai/mcp-actions#client-id-metadata-documents
   # to learn more about client id metadata documents
   clientIdMetadataDocuments:
